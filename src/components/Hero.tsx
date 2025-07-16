@@ -15,24 +15,25 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <div className="glass-effect rounded-3xl p-12 soft-shadow">
-          <h2 className="text-6xl lg:text-8xl font-light text-charcoal-black mb-6 tracking-tight">
-            Soft Living
-          </h2>
-          <p className="text-xl lg:text-2xl text-medium-grey mb-8 font-light leading-relaxed max-w-2xl mx-auto">
-            Experience the perfect harmony of comfort and elegance with our curated collection of premium furniture
-          </p>
+        {/* Large Logo */}
+        <h1 className="text-8xl lg:text-9xl font-bold text-charcoal-black mb-6 tracking-tight">
+          Morbido
+        </h1>
+        
+        {/* Slogan */}
+        <p className="text-2xl lg:text-3xl text-medium-grey mb-12 font-light leading-relaxed max-w-3xl mx-auto">
+          Where comfort meets elegance
+        </p>
+        
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <button className="group flex items-center space-x-3 px-8 py-4 bg-warm-brown text-white rounded-full hover:bg-charcoal-black transition-all duration-300 soft-shadow">
+            <span className="font-medium">Explore Collections</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+          </button>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="group flex items-center space-x-3 px-8 py-4 bg-warm-brown text-white rounded-full hover:bg-charcoal-black transition-all duration-300 soft-shadow">
-              <span className="font-medium">Explore Collections</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </button>
-            
-            <button className="px-8 py-4 bg-white/80 backdrop-blur-md text-charcoal-black rounded-full hover:bg-white transition-all duration-300 soft-shadow border border-white/20">
-              <span className="font-medium">Custom Design</span>
-            </button>
-          </div>
+          <button className="px-8 py-4 bg-white/80 backdrop-blur-md text-charcoal-black rounded-full hover:bg-white transition-all duration-300 soft-shadow border border-white/20">
+            <span className="font-medium">Custom Design</span>
+          </button>
         </div>
       </div>
 
