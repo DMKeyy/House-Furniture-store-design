@@ -1,6 +1,8 @@
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 const InterestingArticles = () => {
   const articles = [
@@ -27,7 +29,47 @@ const InterestingArticles = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-soft-cream">
+    <>
+    <div className="min-h-screen bg-soft-cream relative">
+      {/* Background decorative circles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <motion.div
+          className="absolute top-32 right-16 w-30 h-30 bg-warm-brown/6 rounded-full"
+          animate={{ 
+            y: [0, -20, 0],
+            scale: [1, 1.15, 1]
+          }}
+          transition={{ 
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-28 left-10 w-24 h-24 bg-warm-brown/7 rounded-full"
+          animate={{ 
+            y: [0, 14, 0],
+            x: [0, -8, 0]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute top-2/3 left-1/3 w-18 h-18 bg-warm-brown/5 rounded-full"
+          animate={{ 
+            rotate: [0, 360]
+          }}
+          transition={{ 
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      </div>
+      
       <Header />
       
       <section className="pt-32 pb-16 px-6">
@@ -62,6 +104,8 @@ const InterestingArticles = () => {
         </div>
       </section>
     </div>
+    <Footer />
+    </>
   );
 };
 

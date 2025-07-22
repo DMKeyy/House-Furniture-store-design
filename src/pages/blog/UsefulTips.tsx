@@ -1,6 +1,8 @@
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 const UsefulTips = () => {
   const tips = [
@@ -27,7 +29,47 @@ const UsefulTips = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-soft-cream">
+    <>
+    <div className="min-h-screen bg-soft-cream relative">
+      {/* Background decorative circles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <motion.div
+          className="absolute top-36 right-10 w-28 h-28 bg-warm-brown/5 rounded-full"
+          animate={{ 
+            y: [0, -16, 0],
+            scale: [1, 1.1, 1]
+          }}
+          transition={{ 
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 left-12 w-22 h-22 bg-warm-brown/6 rounded-full"
+          animate={{ 
+            y: [0, 12, 0],
+            x: [0, 8, 0]
+          }}
+          transition={{ 
+            duration: 9,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/5 w-16 h-16 bg-warm-brown/4 rounded-full"
+          animate={{ 
+            rotate: [0, 360]
+          }}
+          transition={{ 
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      </div>
+      
       <Header />
       
       <section className="pt-32 pb-16 px-6">
@@ -62,6 +104,8 @@ const UsefulTips = () => {
         </div>
       </section>
     </div>
+    <Footer />
+    </>
   );
 };
 

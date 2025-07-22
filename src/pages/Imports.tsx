@@ -1,10 +1,63 @@
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Imports = () => {
   return (
-    <div className="min-h-screen bg-soft-cream">
+    <div className="min-h-screen bg-soft-cream relative">
+      {/* Background decorative circles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <motion.div
+          className="absolute top-28 right-20 w-32 h-32 bg-warm-brown/5 rounded-full"
+          animate={{ 
+            y: [0, -22, 0],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{ 
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-24 left-14 w-26 h-26 bg-warm-brown/7 rounded-full"
+          animate={{ 
+            y: [0, 14, 0],
+            x: [0, -10, 0]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute top-2/3 right-1/3 w-20 h-20 bg-warm-brown/6 rounded-full"
+          animate={{ 
+            rotate: [0, 360]
+          }}
+          transition={{ 
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        <motion.div
+          className="absolute top-1/3 left-1/4 w-18 h-18 bg-warm-brown/4 rounded-full"
+          animate={{ 
+            y: [0, -10, 0],
+            scale: [1, 0.85, 1]
+          }}
+          transition={{ 
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </div>
+      
       <Header />
       
       <section className="pt-32 pb-20 px-6">
@@ -85,6 +138,7 @@ const Imports = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

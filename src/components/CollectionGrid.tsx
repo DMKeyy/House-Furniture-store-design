@@ -1,6 +1,9 @@
 
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import ScrollAnimation from './ScrollAnimations';
 
 const CollectionGrid = () => {
   const collections = [
@@ -46,63 +49,110 @@ const CollectionGrid = () => {
     <section className="py-20 px-6 bg-soft-cream">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-light text-charcoal-black mb-6 tracking-tight">
+        <ScrollAnimation animation="fadeUp" className="text-center mb-16">
+          <motion.h2 
+            className="text-5xl font-light text-charcoal-black mb-6 tracking-tight"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
             Our Collections
-          </h2>
-          <p className="text-lg text-medium-grey max-w-2xl mx-auto leading-relaxed">
+          </motion.h2>
+          <motion.p 
+            className="text-lg text-medium-grey max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
             Discover carefully curated furniture collections that blend comfort, style, and functionality
-          </p>
-        </div>
+          </motion.p>
+        </ScrollAnimation>
 
         {/* Collections Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {collections.map((collection, index) => (
-            <div
+            <ScrollAnimation
               key={collection.name}
-              className={`group relative overflow-hidden rounded-3xl soft-shadow hover:scale-105 transition-all duration-500 cursor-pointer ${
+              animation="fadeUp"
+              delay={index * 0.1}
+              className={`${
                 collection.featured && index === 0 ? 'lg:col-span-2 lg:row-span-2' : ''
               }`}
             >
-              {/* Image Container */}
-              <div className="relative h-80 lg:h-96 overflow-hidden">
-                <img
-                  src={collection.image}
-                  alt={collection.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-
-              {/* Content Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <div className="glass-effect rounded-2xl p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-xl font-semibold text-charcoal-black mb-2">
-                        {collection.name}
-                      </h3>
-                      <p className="text-medium-grey text-sm leading-relaxed">
-                        {collection.description}
-                      </p>
-                    </div>
-                    <ArrowUpRight className="w-5 h-5 text-warm-brown opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
+              <motion.div
+                className="group relative overflow-hidden rounded-3xl soft-shadow cursor-pointer"
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                {/* Image Container */}
+                <div className="relative h-80 lg:h-96 overflow-hidden">
+                  <motion.img
+                    src={collection.image}
+                    alt={collection.name}
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                  />
+                  
+                  {/* Overlay */}
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-t from-charcoal-black/60 via-transparent to-transparent"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </div>
-              </div>
-            </div>
+
+                {/* Content Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                  <motion.div 
+                    className="glass-effect rounded-2xl p-6"
+                    initial={{ y: 20, opacity: 0.8 }}
+                    whileHover={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-xl font-semibold text-charcoal-black mb-2">
+                          {collection.name}
+                        </h3>
+                        <p className="text-medium-grey text-sm leading-relaxed">
+                          {collection.description}
+                        </p>
+                      </div>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileHover={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ArrowUpRight className="w-5 h-5 text-warm-brown" />
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </ScrollAnimation>
           ))}
         </div>
 
         {/* View All Button */}
-        <div className="text-center mt-12">
-          <button className="group flex items-center space-x-3 px-8 py-4 bg-white text-charcoal-black rounded-full hover:bg-warm-brown hover:text-white transition-all duration-300 soft-shadow mx-auto">
+        <ScrollAnimation animation="fadeUp" delay={0.5} className="text-center mt-12">
+          <motion.button 
+            className="group flex items-center space-x-3 px-8 py-4 bg-white text-charcoal-black rounded-full hover:bg-warm-brown hover:text-white transition-all duration-300 soft-shadow mx-auto"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <span className="font-medium">View All Collections</span>
-            <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-          </button>
-        </div>
+            <motion.div
+              animate={{ x: [0, 5, 0], y: [0, -2, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <ArrowUpRight className="w-5 h-5" />
+            </motion.div>
+          </motion.button>
+        </ScrollAnimation>
       </div>
     </section>
   );
