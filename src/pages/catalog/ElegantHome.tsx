@@ -21,7 +21,7 @@ const ElegantHome = () => {
 
       <section className="pb-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {[1, 2, 3, 4, 5, 6].map((item) => (
               <div key={item} className="group cursor-pointer">
                 <div className="aspect-square bg-light-grey rounded-2xl overflow-hidden mb-4 group-hover:scale-105 transition-transform duration-300">

@@ -10,20 +10,11 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const navigationItems = [
+  const navigationItems: any = [
     { label: 'Home', href: '/' },
     { label: 'Catalog', href: '/catalog' },
     { label: 'The Brand', href: '/brand' },
-    {
-      label: 'Blog',
-      href: '/blog',
-      dropdown: [
-        { name: 'Useful Tips', href: '/blog/useful-tips' },
-        { name: 'Interesting Articles', href: '/blog/interesting-articles' },
-        { name: 'New Products', href: '/blog/new-products' },
-        { name: 'Updates', href: '/blog/updates' }
-      ]
-    },
+    // Blog removed
     { label: 'Contact', href: '/contact' }
   ];
 

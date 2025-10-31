@@ -73,7 +73,7 @@ const Imports = () => {
 
       <section className="pb-20 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-20">
             <div className="text-center">
               <div className="aspect-square bg-light-grey rounded-2xl overflow-hidden mb-6">
                 <div className="w-full h-full bg-gradient-to-br from-warm-brown/20 to-medium-grey/10" />

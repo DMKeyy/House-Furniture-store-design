@@ -1,10 +1,21 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, Grid, List, SortAsc, ChevronDown } from 'lucide-react';
+import { Search, Filter, Grid, List, ChevronDown, X, Star, Heart, Share2, ShoppingCart } from 'lucide-react';
 import Header from '../components/Header';
 import ScrollAnimation from '../components/ScrollAnimations';
 import PageTransition from '../components/PageTransition';
 import Footer from '../components/Footer';
+
+// Product type for strong typing and lint compliance
+type Product = {
+  id: number;
+  name: string;
+  category: string;
+  description: string;
+  price: number;
+  type: string;
+  image: string;
+};
 
 const Catalog = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -13,6 +24,8 @@ const Catalog = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
   const collectionsRef = useRef<HTMLDivElement>(null);
   const sortRef = useRef<HTMLDivElement>(null);
@@ -32,6 +45,29 @@ const Catalog = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Handle escape key to close details panel
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isDetailsOpen) {
+        setIsDetailsOpen(false);
+        setSelectedProduct(null);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isDetailsOpen]);
+
+  const openProductDetails = (product: Product) => {
+    setSelectedProduct(product);
+    setIsDetailsOpen(true);
+  };
+
+  const closeProductDetails = () => {
+    setIsDetailsOpen(false);
+    setTimeout(() => setSelectedProduct(null), 300);
+  };
+
   const categories = [
     { id: 'all', name: 'All Collections', count: 48 },
     { id: 'modern-minimal', name: 'Modern & Minimal', count: 6 },
@@ -44,7 +80,7 @@ const Catalog = () => {
     { id: 'vintage-revival', name: 'Vintage Revival', count: 6 }
   ];
 
-  const products = [
+  const products = useMemo<Product[]>(() => [
     // Modern & Minimal
     { id: 1, name: "Minimal Chair Alpha", category: "modern-minimal", description: "Clean geometric forms meet comfort", price: 349, type: "chair", image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
     { id: 2, name: "Minimal Chair Beta", category: "modern-minimal", description: "Sleek design for modern spaces", price: 399, type: "chair", image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
@@ -108,7 +144,7 @@ const Catalog = () => {
     { id: 46, name: "Vintage Bookcase", category: "vintage-revival", description: "Literary elegance for your collection", price: 899, type: "storage", image: "https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
     { id: 47, name: "Vintage Coffee Table", category: "vintage-revival", description: "Conversation starter centerpiece", price: 649, type: "table", image: "https://images.unsplash.com/photo-1562113530-57ba9c67b7d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
     { id: 48, name: "Vintage Bar Cabinet", category: "vintage-revival", description: "Entertaining with vintage flair", price: 1099, type: "storage", image: "https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }
-  ];
+  ], []);
 
   const filteredProducts = useMemo(() => {
     let filtered = products;
@@ -140,7 +176,7 @@ const Catalog = () => {
     });
 
     return filtered;
-  }, [selectedCategory, searchQuery, sortBy]);
+  }, [selectedCategory, searchQuery, sortBy, products]);
 
   const getCategoryDescription = (categoryId: string) => {
     const descriptions = {
@@ -345,7 +381,6 @@ const Catalog = () => {
         {/* Products Grid */}
         <section className="pb-20 px-6">
           <div className="max-w-7xl mx-auto">
-            <ScrollAnimation animation="fadeUp">
               <div className="mb-6 flex justify-between items-center">
                 <p className="text-medium-grey">
                   {filteredProducts.length} products found
@@ -356,7 +391,7 @@ const Catalog = () => {
                 <motion.div 
                   key={`${selectedCategory}-${viewMode}`}
                   className={viewMode === 'grid' ? 
-                    "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" :
+                    "grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8" :
                     "space-y-6"
                   }
                   initial={{ opacity: 0 }}
@@ -364,11 +399,11 @@ const Catalog = () => {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {filteredProducts.map((product, index) => (
+                  {filteredProducts.map((product) => (
                     <motion.div
                       key={product.id}
                       className={viewMode === 'grid' ? 
-                        "group cursor-pointer" :
+                        "bg-white rounded-2xl p-4 soft-shadow group cursor-pointer h-full flex flex-col" :
                         "bg-white rounded-2xl p-6 soft-shadow flex gap-6 items-center"
                       }
                       initial={{ opacity: 1, y: 0 }}
@@ -388,20 +423,21 @@ const Catalog = () => {
                               }}
                             />
                           </div>
-                          <h3 className="text-xl font-medium text-charcoal-black mb-2">
+                          <h3 className="text-lg md:text-xl font-medium text-charcoal-black mb-2 truncate">
                             {product.name}
                           </h3>
-                          <p className="text-medium-grey mb-4">
+                          <p className="text-medium-grey mb-4 hidden sm:block">
                             {product.description}
                           </p>
                           <div className="flex justify-between items-center">
-                            <p className="text-2xl font-light text-warm-brown">
+                            <p className="text-xl md:text-2xl font-light text-warm-brown">
                               ${product.price.toLocaleString()}
                             </p>
                             <motion.button
-                              className="px-4 py-2 bg-warm-brown text-white rounded-full text-sm font-medium hover:bg-charcoal-black transition-colors duration-300"
+                              className="px-3 py-2 bg-warm-brown text-white rounded-full text-xs md:text-sm font-medium hover:bg-charcoal-black transition-colors duration-300"
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
+                              onClick={() => openProductDetails(product)}
                             >
                               View Details
                             </motion.button>
@@ -438,6 +474,7 @@ const Catalog = () => {
                               className="px-6 py-2 bg-warm-brown text-white rounded-full text-sm font-medium hover:bg-charcoal-black transition-colors duration-300"
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
+                              onClick={() => openProductDetails(product)}
                             >
                               View Details
                             </motion.button>
@@ -461,9 +498,195 @@ const Catalog = () => {
                   <p className="text-medium-grey">Try adjusting your filters or search terms.</p>
                 </motion.div>
               )}
-            </ScrollAnimation>
           </div>
         </section>
+
+        {/* Product Details Panel */}
+        <AnimatePresence>
+          {isDetailsOpen && selectedProduct && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                className="fixed inset-0 bg-charcoal-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={closeProductDetails}
+              />
+
+              {/* Details Card */}
+              <motion.div
+                className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <motion.div
+                  className="bg-white rounded-3xl shadow-2xl w-full max-w-4xl pointer-events-auto overflow-hidden"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* make inner area scrollable while keeping rounded corners clipped by outer container */}
+                  <div className="max-h-[90vh] overflow-y-auto">
+                    <div className="relative">
+                    {/* Close Button */}
+                    <button
+                      onClick={closeProductDetails}
+                      className="absolute top-6 right-6 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors duration-200 z-10 shadow-lg"
+                    >
+                      <X className="w-5 h-5 text-charcoal-black" />
+                    </button>
+
+                    {/* Content Grid */}
+                    <div className="grid md:grid-cols-2 gap-0">
+                      {/* Product Image */}
+                      <div className="aspect-square bg-light-grey overflow-hidden rounded-t-3xl md:rounded-l-3xl md:rounded-tr-[0px] md:rounded-bl-[0px]">
+                        <img
+                          src={selectedProduct.image}
+                          alt={selectedProduct.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.src = '/placeholder.svg';
+                          }}
+                        />
+                      </div>
+
+                      {/* Product Info */}
+                      <div className="p-8 flex flex-col justify-between md:rounded-r-3xl rounded-b-3xl">
+                        {/* Category and Type */}
+                        <div className="flex items-center gap-2 mb-4">
+                          <span className="px-3 py-1 bg-warm-brown/10 text-warm-brown rounded-full text-sm font-medium capitalize">
+                            {selectedProduct.category.replace('-', ' ')}
+                          </span>
+                          <span className="px-3 py-1 bg-medium-grey/10 text-medium-grey rounded-full text-sm capitalize">
+                            {selectedProduct.type}
+                          </span>
+                        </div>
+
+                        {/* Product Name */}
+                        <h2 className="text-3xl font-light text-charcoal-black mb-4">
+                          {selectedProduct.name}
+                        </h2>
+
+                        {/* Price */}
+                        <div className="text-4xl font-light text-warm-brown mb-6">
+                          ${selectedProduct.price.toLocaleString()}
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-lg text-medium-grey leading-relaxed mb-6">
+                          {selectedProduct.description}
+                        </p>
+
+                        {/* Features */}
+                        <div className="mb-6">
+                          <h3 className="text-lg font-medium text-charcoal-black mb-3">Features</h3>
+                          <ul className="space-y-2">
+                            <li className="flex items-center text-medium-grey">
+                              <Star className="w-4 h-4 text-warm-brown mr-2" />
+                              Handcrafted by skilled artisans
+                            </li>
+                            <li className="flex items-center text-medium-grey">
+                              <Star className="w-4 h-4 text-warm-brown mr-2" />
+                              Sustainable materials
+                            </li>
+                            <li className="flex items-center text-medium-grey">
+                              <Star className="w-4 h-4 text-warm-brown mr-2" />
+                              Easy assembly included
+                            </li>
+                            <li className="flex items-center text-medium-grey">
+                              <Star className="w-4 h-4 text-warm-brown mr-2" />
+                              Free delivery available
+                            </li>
+                          </ul>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="space-y-4 mt-auto">
+                          <div className="flex gap-3">
+                            <motion.button
+                              className="flex-1 px-6 py-4 bg-warm-brown text-white rounded-xl font-medium hover:bg-charcoal-black transition-colors duration-300 flex items-center justify-center gap-2"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <ShoppingCart className="w-5 h-5" />
+                              Add to Cart
+                            </motion.button>
+                            <motion.button
+                              className="px-4 py-4 border border-warm-brown text-warm-brown rounded-xl hover:bg-warm-brown hover:text-white transition-colors duration-300"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <Heart className="w-5 h-5" />
+                            </motion.button>
+                            <motion.button
+                              className="px-4 py-4 border border-warm-brown text-warm-brown rounded-xl hover:bg-warm-brown hover:text-white transition-colors duration-300"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <Share2 className="w-5 h-5" />
+                            </motion.button>
+                          </div>
+
+                          <motion.button
+                            className="w-full px-6 py-3 border border-medium-grey text-medium-grey rounded-xl hover:border-warm-brown hover:text-warm-brown transition-colors duration-300"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            Request Custom Quote
+                          </motion.button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Additional Details Section */}
+                    <div className="p-8 border-t border-light-grey">
+                      <div className="grid md:grid-cols-2 gap-8">
+                        {/* Product Details */}
+                        <div>
+                          <h3 className="text-lg font-medium text-charcoal-black mb-4">Product Details</h3>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <span className="text-sm text-medium-grey">Material</span>
+                              <p className="text-charcoal-black font-medium">Premium Wood</p>
+                            </div>
+                            <div>
+                              <span className="text-sm text-medium-grey">Dimensions</span>
+                              <p className="text-charcoal-black font-medium">Custom Available</p>
+                            </div>
+                            <div>
+                              <span className="text-sm text-medium-grey">Color Options</span>
+                              <p className="text-charcoal-black font-medium">Multiple Available</p>
+                            </div>
+                            <div>
+                              <span className="text-sm text-medium-grey">Warranty</span>
+                              <p className="text-charcoal-black font-medium">5 Years</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Additional Info */}
+                        <div>
+                          <h3 className="text-lg font-medium text-charcoal-black mb-4">Shipping & Service</h3>
+                          <div className="text-sm text-medium-grey space-y-2">
+                            <p>• Free shipping on orders over $500</p>
+                            <p>• 30-day return policy</p>
+                            <p>• Professional assembly available</p>
+                            <p>• Design consultation included</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
       <Footer />
     </PageTransition>

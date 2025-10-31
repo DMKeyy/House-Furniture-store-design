@@ -25,12 +25,6 @@ const Footer = () => {
     { name: 'Contact', href: '/contact' }
   ];
 
-  const blogLinks = [
-    { name: 'Useful Tips', href: '/blog/useful-tips' },
-    { name: 'New Products', href: '/blog/new-products' },
-    { name: 'Interesting Articles', href: '/blog/interesting-articles' },
-    { name: 'Updates', href: '/blog/updates' }
-  ];
 
   const socialLinks = [
     { icon: Facebook, href: '#', name: 'Facebook' },
@@ -84,7 +78,7 @@ const Footer = () => {
       <div className="relative z-10">
         {/* Main Footer Content */}
         <div className="max-w-7xl mx-auto px-6 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             
             {/* Brand Section */}
             <div className="lg:col-span-1">
@@ -132,32 +126,7 @@ const Footer = () => {
               </motion.div>
             </div>
 
-            {/* Blog Links */}
-            <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <h4 className="text-lg font-medium text-white mb-6">Blog</h4>
-                <ul className="space-y-3">
-                  {blogLinks.map((link, index) => (
-                    <li key={link.name}>
-                      <motion.a
-                        href={link.href}
-                        className="text-white/70 hover:text-warm-brown transition-colors duration-200 flex items-center group"
-                        whileHover={{ x: 5 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <ArrowRight className="w-3 h-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                        {link.name}
-                      </motion.a>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            </div>
+            {/* Blog removed */}
 
             {/* Contact Info */}
             <div>

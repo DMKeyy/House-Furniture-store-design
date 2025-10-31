@@ -16,11 +16,7 @@ import Catalog from "./pages/Catalog";
 import Brand from "./pages/Brand";
 import Contact from "./pages/Contact";
 
-// Blog pages
-import UsefulTips from "./pages/blog/UsefulTips";
-import InterestingArticles from "./pages/blog/InterestingArticles";
-import NewProducts from "./pages/blog/NewProducts";
-import Updates from "./pages/blog/Updates";
+// Blog removed
 
 const queryClient = new QueryClient();
 
@@ -44,11 +40,7 @@ const App = () => (
           {/* Contact Route */}
           <Route path="/contact" element={<Contact />} />
           
-          {/* Blog Routes */}
-          <Route path="/blog/useful-tips" element={<UsefulTips />} />
-          <Route path="/blog/interesting-articles" element={<InterestingArticles />} />
-          <Route path="/blog/new-products" element={<NewProducts />} />
-          <Route path="/blog/updates" element={<Updates />} />
+          {/* Blog removed */}
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

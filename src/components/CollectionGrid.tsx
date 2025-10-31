@@ -71,15 +71,12 @@ const CollectionGrid = () => {
         </ScrollAnimation>
 
         {/* Collections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {collections.map((collection, index) => (
             <ScrollAnimation
               key={collection.name}
               animation="fadeUp"
               delay={index * 0.1}
-              className={`${
-                collection.featured && index === 0 ? 'lg:col-span-2 lg:row-span-2' : ''
-              }`}
             >
               <motion.div
                 className="group relative overflow-hidden rounded-3xl soft-shadow cursor-pointer"
@@ -87,7 +84,7 @@ const CollectionGrid = () => {
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 {/* Image Container */}
-                <div className="relative h-80 lg:h-96 overflow-hidden">
+                <div className="relative h-80 overflow-hidden">
                   <motion.img
                     src={collection.image}
                     alt={collection.name}

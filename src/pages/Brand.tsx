@@ -126,12 +126,13 @@ const Brand = () => {
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <motion.div 
-                    className="w-full h-full bg-gradient-to-br from-warm-brown/20 to-medium-grey/10"
-                    whileHover={{ 
-                      background: "linear-gradient(135deg, rgba(98,80,67,0.3), rgba(145,145,145,0.2))"
+                  <img
+                    src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80"
+                    alt="Elegant living room with comfortable modern furniture showcasing our philosophy of comfort and beauty"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.src = '/placeholder.svg';
                     }}
-                    transition={{ duration: 0.3 }}
                   />
                 </motion.div>
               </ScrollAnimation>
@@ -144,12 +145,13 @@ const Brand = () => {
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <motion.div 
-                    className="w-full h-full bg-gradient-to-br from-soft-cream/60 to-warm-brown/20"
-                    whileHover={{ 
-                      background: "linear-gradient(135deg, rgba(240,238,237,0.8), rgba(98,80,67,0.3))"
+                  <img
+                    src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=800&q=80"
+                    alt="Skilled craftsman working on wooden furniture with traditional tools demonstrating our commitment to quality craftsmanship"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.src = '/placeholder.svg';
                     }}
-                    transition={{ duration: 0.3 }}
                   />
                 </motion.div>
               </ScrollAnimation>
@@ -167,7 +169,7 @@ const Brand = () => {
 
             <ScrollAnimation animation="fadeUp" className="text-center">
               <h2 className="text-4xl font-light text-charcoal-black mb-8">Our Values</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
                 {values.map((value, index) => (
                   <ScrollAnimation
                     key={value.title}
