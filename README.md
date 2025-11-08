@@ -1,56 +1,40 @@
-# Welcome to your Lovable project
+# Morbido — Visual Elegance
+
+A clean, modern React + TypeScript storefront built with Vite, Tailwind CSS and shadcn-ui components.
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/8d8c3d01-1c2e-468a-9141-1de2b27c494c
+This repository contains the source for the Morbido Visual Elegance demo site. Use the instructions below to run and modify the project locally.
 
-## How can I edit this code?
+## Developing locally
 
-There are several ways of editing your application.
+Prerequisites:
+- Node.js and npm (or a compatible package manager such as pnpm or bun).
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/8d8c3d01-1c2e-468a-9141-1de2b27c494c) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Quick start:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# 1. Clone the repository
+git clone https://github.com/DMKeyy/House-Furniture-store-design.git
+cd House-Furniture-store-design
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# 2. Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 3. Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+You can edit the code with your preferred IDE. Changes will be reflected in the running dev server.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Editing on GitHub or Codespaces
 
-**Use GitHub Codespaces**
+You can also edit files directly on GitHub using the web editor or in GitHub Codespaces:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- Edit files on GitHub and commit your changes via the web interface.
+- Open a Codespace for a full dev environment in the cloud if desired.
 
-## What technologies are used for this project?
+## Technologies
 
 This project is built with:
 
@@ -60,14 +44,19 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/8d8c3d01-1c2e-468a-9141-1de2b27c494c) and click on Share -> Publish.
+Deploy this site to any static host or platform that supports Vite-built frontends (for example Vercel, Netlify, Cloudflare Pages). Typical steps:
 
-## Can I connect a custom domain to my Lovable project?
+1. Build the site: `npm run build`
+2. Deploy the `dist`/`build` output to your host of choice.
 
-Yes, you can!
+Refer to your chosen hosting provider's docs for exact deployment steps.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Notes
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- If you need help running the project locally, open an issue or ask for guidance.
+- Update package manager commands if you prefer `pnpm` or `bun`.
+
+---
+Updated README to remove references to third-party editing tools and provide generic local-dev & deploy instructions.
